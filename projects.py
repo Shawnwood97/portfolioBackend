@@ -13,8 +13,10 @@ def list_projects():
   if(result['success'] == False):
     return result['error']
 
-  if(len(result['data']) == 1):
-    projects_json = json.dumps(result['data'][0], default=str)
+  print(result['data'])
+
+  if(len(result['data']) > 0):
+    projects_json = json.dumps(result['data'], default=str)
     return Response(projects_json, mimetype='application/json', status=200)
   else:
     return Response("Projects Not Found", mimetype="text/plain", status=404)

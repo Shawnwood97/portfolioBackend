@@ -1,6 +1,8 @@
 from flask import Flask
 import sys
 import projects
+import messages
+import skills
 
 app = Flask(__name__)
 
@@ -8,8 +10,33 @@ app = Flask(__name__)
 
 
 @app.get('/api/projects')
-def call_list_user():
-  return projects.list_user()
+def call_list_projects():
+  return projects.list_projects()
+
+
+#! =========== /API/MESSAGES ENDPOINT ============
+
+
+@app.post('/api/messages')
+def call_send_message():
+  return messages.send_message()
+
+#! =========== /API/SKILLS ENDPOINT ============
+
+
+@app.get('/api/skills/frontend')
+def call_list_front_skills():
+  return skills.list_front_skills()
+
+
+@app.get('/api/skills/backend')
+def call_list_backend_skills():
+  return skills.list_back_skills()
+
+
+@app.get('/api/skills/tools')
+def call_list_tool_skills():
+  return skills.list_tool_skills()
 
 
 if(len(sys.argv) > 1):
