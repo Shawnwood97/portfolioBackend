@@ -7,7 +7,7 @@ import traceback
 def list_projects():
 
   result = dbh.run_query(
-      'SELECT p.id, p.name, p.description, p.tech, p.image, p.link FROM projects p ORDER BY p.id')
+      'SELECT p.id, p.name, p.description, p.tech, p.image, p.link, p.code_link FROM projects p ORDER BY p.id')
 
   # error check on above query
   if(result['success'] == False):

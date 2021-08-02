@@ -118,6 +118,12 @@ def input_handler(endpoint_args, u_inputs=[]):
       # the the value of name as a key in endpoint_args, wrapped in the type value.
       # ie: login_token: str(request.json['login_token'])
       if(u_input['required'] == True):
+        # added another error handler due to an issue with KeyError, works for now.
+        if(endpoint_args[u_input['name']] == ''):
+          payload['success'] = False
+          payload['error'] = Response(
+              f"Required field {u_input['name']} is empty!", mimetype="text/plain", status=422)
+
         payload['data'][u_input['name']] = u_input['type'](
             endpoint_args[u_input['name']])
       else:
@@ -126,8 +132,6 @@ def input_handler(endpoint_args, u_inputs=[]):
         if(endpoint_args.get(u_input['name']) != None and endpoint_args.get(u_input['name']) != ''):
           payload['data'][u_input['name']] = u_input['type'](
               endpoint_args[u_input['name']])
-        else:
-          payload['data'][u_input['name']] = None
     # exceptions that set the success key to False and the response to f strings to be more specific about what went wrong.
     except ValueError:
       traceback.print_exc()
